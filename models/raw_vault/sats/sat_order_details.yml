@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: sat_order_details
+    description: This is the raw vault satellite model containg order details
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - ORDER_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - ORDER_HK
+            - LOAD_DATE
+      - dbt_constraints.foreign_key:
+          fk_column_names:
+            - ORDER_HK
+          pk_table_name: ref('hub_orders')
+          pk_column_names:
+            - ORDER_HK

@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: hub_orders
+    description: This is the raw vault hub model for orders
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - ORDER_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - ORDER_HK
+            - LOAD_DATE

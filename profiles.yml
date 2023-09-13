@@ -1,0 +1,14 @@
+data_vault:
+  outputs:
+    dev:
+      account: {{ env_var('DBT_ACCOUNT') }}
+      authenticator: externalbrowser
+      database: {{ env_var('DBT_DATABASE') }}
+      role: {{ env_var('DBT_ROLE') }}
+      schema: {{ env_var('DBT_SCHEMA') }}
+      threads: 4
+      type: snowflake
+      user: {{ env_var('DBT_USER') }}
+      warehouse: {{ env_var('DBT_WAREHOUSE') }}
+      reuse_connections: True
+  target: dev

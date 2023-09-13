@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: base_classic_models__payments
+    description: This is the base staging model for payments from the classic_models database
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - CHECK_NUMBER
+      - dbt_constraints.unique_key:
+          column_names:
+            - CHECK_NUMBER

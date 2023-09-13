@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: link_customer_payment
+    description: This is the raw vault links model to connect customer to payment
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - LINK_CUSTOMER_PAYMENT_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - LINK_CUSTOMER_PAYMENT_HK
+            - LOAD_DATE
+      - dbt_constraints.foreign_key:
+          fk_column_names: 
+            - CUSTOMER_HK
+          pk_table_name: ref('hub_customers')
+          pk_column_names: 
+            - CUSTOMER_HK
+      - dbt_constraints.foreign_key:
+          fk_column_names: 
+            - PAYMENT_HK
+          pk_table_name: ref('hub_payments')
+          pk_column_names: 
+            - PAYMENT_HK

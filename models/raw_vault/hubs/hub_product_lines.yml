@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: hub_product_lines
+    description: This is the raw vault hub model for product lines
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - PRODUCT_LINE_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - PRODUCT_LINE_HK
+            - LOAD_DATE

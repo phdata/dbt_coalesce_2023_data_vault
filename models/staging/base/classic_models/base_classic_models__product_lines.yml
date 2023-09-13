@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: base_classic_models__product_lines
+    description: This is the base staging model for product lines from the classic_models database
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - PRODUCT_LINE
+      - dbt_constraints.unique_key:
+          column_names:
+            - PRODUCT_LINE

@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: classic_models
+    database: sandbox
+    schema: classic_models
+    tables:
+      - name: customers
+      - name: employees
+      - name: offices
+      - name: orders
+      - name: order_details
+      - name: payments
+      - name: products
+      - name: product_lines

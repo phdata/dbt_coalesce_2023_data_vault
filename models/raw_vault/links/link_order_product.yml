@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: link_order_product
+    description: This is the raw vault links model to connect order to product
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - LINK_ORDER_PRODUCT_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - LINK_ORDER_PRODUCT_HK
+            - LOAD_DATE
+      - dbt_constraints.foreign_key:
+          fk_column_names: 
+            - ORDER_HK
+          pk_table_name: ref('hub_orders')
+          pk_column_names: 
+            - ORDER_HK
+      - dbt_constraints.foreign_key:
+          fk_column_names: 
+            - PRODUCT_HK
+          pk_table_name: ref('hub_products')
+          pk_column_names: 
+            - PRODUCT_HK

@@ -1,0 +1,110 @@
+
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'data_vault'
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'data_vault'
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Configuring seeds
+# Full documentation: https://docs.getdbt.com/reference/seed-configs
+seeds:
+  dbt_project_evaluator:
+    dbt_project_evaluator_exceptions:
+      +enabled: false
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+models:
+  data_vault:
+    staging:
+      +materialized: view
+      +database: "sandbox"
+      +schema: "stage"
+    raw_vault:
+      +materialized: table
+      +database: "sandbox"
+      +schema: "data_vault"
+    business_vault:
+      +materialized: table
+      +database: "sandbox"
+      +schema: "data_vault"
+    marts:
+      +materialized: table
+      +database: "sandbox"
+      +schema: "data_mart"
+  dbt_project_evaluator:
+    +database: "sandbox"
+    +schema: "dbt_project_evaluator"
+  dbt_artifacts:
+    +database: "sandbox" # optional, default is your target database
+    +schema: "dbt_artifacts" # optional, default is your target schema
+    staging:
+      +database: "sandbox" # optional, default is your target database
+      +schema: "dbt_artifacts_stg" # optional, default is your target schema
+    sources:
+      +database: "sandbox" # optional, default is your target database
+      +schema: "dbt_artifacts_src" # optional, default is your target schema
+
+on-run-end:
+  - "{% if target.name == 'prod' %}{{ dbt_artifacts.upload_results(results) }}{% endif %}"
+
+dispatch:
+  - macro_namespace: dbt
+    search_order: ['dbt_project_evaluator', 'dbt']
+
+vars:
+  # The package can be temporarily disabled using this variable
+  dbt_constraints_enabled: true
+
+  # The package can also add constraints on sources if you have sufficient privileges
+  dbt_constraints_sources_enabled: false
+
+  # You can also be specific on which constraints are enabled for sources
+  # You must also enable dbt_constraints_sources_enabled above
+  dbt_constraints_sources_pk_enabled: true
+  dbt_constraints_sources_uk_enabled: true
+  dbt_constraints_sources_fk_enabled: true
+  dbt_constraints_sources_nn_enabled: true
+
+  dbt_project_evaluator:
+    # set doc and test coverage percentage
+    documentation_coverage_target: 75
+    test_coverage_target: 75
+    # set constraints tests as primary key test
+    primary_key_test_macros: [["dbt.test_unique", "dbt.test_not_null"],["dbt_constraints.test_primary_key"]]
+    # set model types
+    model_types: ['staging', 'hash_stage', 'raw_vault', 'business_vault', 'marts', 'other', 'intermediate']
+    staging_folder_name: 'base'
+    staging_prefixes: ['base_']
+    hash_stage_folder_name: 'stage'
+    hash_stage_prefixes: ['stg_']
+    raw_vault_folder_name: 'raw_vault'
+    raw_vault_prefixes: ['hub_', 'link_', 'sat_', 'date_']
+    business_vault_folder_name: 'business_vault'
+    business_vault_prefixes: ['pit_', 'bridge_']
+    marts_folder_name: 'marts'
+    marts_prefixes: ['dim_', 'fct_']
+    # set model fanout threshold
+    models_fanout_threshold: 5
+    # exclude packages
+    exclude_packages: ["dbt_artifacts", "dbt_project_evaluator"]
+    exclude_paths_from_project: ["/date_spine.sql"]

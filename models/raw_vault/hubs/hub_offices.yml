@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: hub_offices
+    description: This is the raw vault hub model for offices
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - OFFICE_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - OFFICE_HK
+            - LOAD_DATE

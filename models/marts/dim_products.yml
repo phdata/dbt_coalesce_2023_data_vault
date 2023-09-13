@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: dim_products
+    description: This is the dimmensional model for products
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - product_pk
+      - dbt_constraints.unique_key:
+          column_names:
+            - product_pk

@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: fct_products
+    description: This is the dimmensional model of facts for products
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - product_pk
+      - dbt_constraints.unique_key:
+          column_names:
+            - product_pk
+      - dbt_constraints.foreign_key:
+          fk_column_names:
+            - product_pk
+          pk_table_name: ref('dim_products')
+          pk_column_names: 
+            - product_pk

@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_order_details
+    description: This is the data vault hashed staging model for order details
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - ORDER_DETAILS_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - ORDER_DETAILS_HK

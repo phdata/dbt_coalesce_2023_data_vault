@@ -1,0 +1,11 @@
+packages:
+  - package: dbt-labs/dbt_utils
+    version: 1.1.1
+  - package: Datavault-UK/automate_dv
+    version: 0.10.0
+  - package: Snowflake-Labs/dbt_constraints
+    version: 0.6.1
+  - package: brooklyn-data/dbt_artifacts
+    version: 2.5.0
+  - package: dbt-labs/dbt_project_evaluator
+    version: 0.6.2

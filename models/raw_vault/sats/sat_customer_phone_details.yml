@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: sat_customer_phone_details
+    description: This is the raw vault satellite model containg customer phone details
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - CUSTOMER_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - CUSTOMER_HK
+            - LOAD_DATE
+      - dbt_constraints.foreign_key:
+          fk_column_names:
+            - CUSTOMER_HK
+          pk_table_name: ref('hub_customers')
+          pk_column_names: 
+            - CUSTOMER_HK

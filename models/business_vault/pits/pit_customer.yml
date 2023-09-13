@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: pit_customer
+    description: This is the business vault pit model connecting the different customer satellites
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - CUSTOMER_HK
+            - AS_OF_DATE
+      - dbt_constraints.unique_key:
+          column_names:
+            - CUSTOMER_HK
+            - AS_OF_DATE
+      - dbt_constraints.foreign_key:
+          fk_column_names:
+            - SAT_CUSTOMER_ADDRESS_DETAILS_PK
+            - SAT_CUSTOMER_ADDRESS_DETAILS_LDTS
+          pk_table_name: ref('sat_customer_address_details')
+          pk_column_names: 
+            - CUSTOMER_HK
+            - LOAD_DATE
+      - dbt_constraints.foreign_key:
+          fk_column_names:
+            - SAT_CUSTOMER_DETAILS_PK
+            - SAT_CUSTOMER_DETAILS_LDTS
+          pk_table_name: ref('sat_customer_details')
+          pk_column_names: 
+            - CUSTOMER_HK
+            - LOAD_DATE
+      - dbt_constraints.foreign_key:
+          fk_column_names:
+            - SAT_CUSTOMER_PHONE_DETAILS_PK
+            - SAT_CUSTOMER_PHONE_DETAILS_LDTS
+          pk_table_name: ref('sat_customer_phone_details')
+          pk_column_names: 
+            - CUSTOMER_HK
+            - LOAD_DATE

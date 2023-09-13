@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_employees
+    description: This is the data vault hashed staging model for employees
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - EMPLOYEE_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - EMPLOYEE_HK

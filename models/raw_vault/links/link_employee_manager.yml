@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: link_employee_manager
+    description: This is the raw vault links model to connect employee to manager
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - LINK_EMPLOYEE_MANAGER_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - LINK_EMPLOYEE_MANAGER_HK
+            - LOAD_DATE
+      - dbt_constraints.foreign_key:
+          fk_column_names: 
+            - EMPLOYEE_HK
+          pk_table_name: ref('hub_employees')
+          pk_column_names: 
+            - EMPLOYEE_HK
+      - dbt_constraints.foreign_key:
+          fk_column_names: 
+            - MANAGER_HK
+          pk_table_name: ref('hub_employees')
+          pk_column_names: 
+            - EMPLOYEE_HK

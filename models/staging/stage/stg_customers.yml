@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: This is the data vault hashed staging model for customers
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - CUSTOMER_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - CUSTOMER_HK

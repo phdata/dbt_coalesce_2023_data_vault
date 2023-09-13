@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: date_spine
+    description: This is our date spine used to create our date dimmension and for our pit table
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - AS_OF_DATE

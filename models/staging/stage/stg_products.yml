@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_products
+    description: This is the data vault hashed staging model for products
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - PRODUCT_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - PRODUCT_HK

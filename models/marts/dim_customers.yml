@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: This is the dimmensional model for customers
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - CUSTOMER_PK
+      - dbt_constraints.unique_key:
+          column_names:
+            - CUSTOMER_PK

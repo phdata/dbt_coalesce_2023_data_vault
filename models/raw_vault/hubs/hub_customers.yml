@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: hub_customers
+    description: This is the raw vault hub model for customers
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - CUSTOMER_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - CUSTOMER_HK
+            - LOAD_DATE

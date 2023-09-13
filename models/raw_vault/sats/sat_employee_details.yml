@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: sat_employee_details
+    description: This is the raw vault satellite model containg employee details
+    tests:
+      # Single column constraints
+      - dbt_constraints.primary_key:
+          column_names:
+            - EMPLOYEE_HK
+      - dbt_constraints.unique_key:
+          column_names:
+            - EMPLOYEE_HK
+            - LOAD_DATE
+      - dbt_constraints.foreign_key:
+          fk_column_names: 
+            - EMPLOYEE_HK
+          pk_table_name: ref('hub_employees')
+          pk_column_names: 
+            - EMPLOYEE_HK
